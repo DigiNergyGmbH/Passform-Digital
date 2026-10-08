@@ -82,19 +82,65 @@ change yet.
 
 ## Module layout
 
+Modules sit at the repository root, one directory per Odoo module:
+
 ```
-custom_module/diginergy/<client_slug>/<module_name>/
-custom_module/diginergy/core/<module_name>/        # shared modules
+<module_name>/        # client modules, on that client's branches
+<module_name>/        # shared modules, on core
 ```
 
-Keeping client modules in a per-client directory means a branch mostly selects
-which modules are present and at which version.
+The branch name already identifies the client, so repeating the client in the
+path is unnecessary. Point the instance's `addons_path` at the checkout
+directory itself. A module directory is never renamed once the module is
+installed — Odoo records the module name in the database, and renaming the
+directory breaks that record.
+
+## Vendored external addons
+
+Modules written outside this repository are vendored into it, never left as a
+loose clone, so an upstream repository disappearing or being rewritten cannot
+lose work that is running in production.
+
+- `vendor/<name>` — frozen, byte-identical snapshot of the upstream default
+  branch. Never modified; it is the reference for what upstream looked like.
+- The client branch carries the same tree plus a merge commit, so upstream
+  history is preserved and every later change stays diffable:
+
+```bash
+git fetch akshara
+git diff origin/vendor/<name> <client>/staging   # what we changed since import
+git log --oneline origin/vendor/<name>..<client>/staging
+```
+
+Current imports:
+
+| Branch | Upstream | Imported commit |
+| --- | --- | --- |
+| `vendor/erzberger-addons` | `AksharaBiju2025/erzberger_addons` | `0200a6c` |
+| `ezberger/staging` | same upstream, merged with full history | `2c44de3` |
+
+Upstream tracks compiled `.pyc` files and three `.docx` documents; they were
+imported verbatim so the snapshot stays exact. Upstream module directories are
+spelled `erzberger_*` while the branch slug is `ezberger`; the spelling is kept
+as-is for the reason given above.
+
+Refreshing an import when upstream has moved on:
+
+```bash
+git fetch akshara
+git checkout <client>/staging
+git merge akshara/main                                   # review, then commit
+git push origin <client>/staging
+git push origin akshara/main:refs/heads/vendor/<name>    # re-freeze the snapshot
+```
 
 ## Protected branches
 
 The branch rulesets `refs/heads/*/prod` and `refs/heads/*/staging` block force
-pushes and deletions and require a pull request before merging. `main` and
-`core` are protected the same way.
+pushes and deletions and require a pull request before merging. `main`, `core`
+and `vendor/*` are protected the same way. Repository administrators are listed
+as bypass actors, so an emergency push stays possible without weakening the
+rule for everyone else.
 
 ## Local development
 
