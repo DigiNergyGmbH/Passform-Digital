@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="erzberger_51x19_zpl_label">
+
+        <t t-if="product._name == 'product.product'">
+            <t t-set="name_display"
+               t-value="f'[{product.default_code}] {product.name}' if product.default_code else product.name"/>
+        </t>
+        <t t-else="">
+            <t t-set="name_display"
+               t-value="product_info['display_name_markup']"/>
+        </t>
+
+        <t t-if="len(name_display) > 55">
+            <t t-set="name_display"
+               t-value="name_display[:52] + '...'"/>
+        </t>
+
+
+^PW408
+^LL152
+^LH0,0
+^LS0
+
+^FO10,6
+^A0N,18,16
+^FB260,2,2,L,0
+^FD<t t-out="name_display"/>^FS
+
+<!-- Price -->
+<t t-if="price_included">
+^FO260,72
+^A0N,24,24
+^FD<t t-esc="price"/>^FS
+</t>
+
+<!-- Barcode -->
+<t t-if="barcode">
+<t t-set="bc_module" t-value="2"/>
+<t t-set="bc_height" t-value="55"/>
+<t t-set="bc_est_width" t-value="int(bc_module * (11 * (len(barcode) + 2) + 13) + (bc_module * 20))"/>
+<t t-set="bc_x" t-value="max(4, int((408 - bc_est_width) / 2) - 40)"/>
+^FO<t t-out="bc_x"/>,50
+^BY<t t-out="bc_module"/>,2,<t t-out="bc_height"/>
+^BCN,<t t-out="bc_height"/>,Y,N,N
+^FD<t t-out="barcode"/>^FS
+</t>
+
+
+    </template>
+
+    <template id="label_product_product_view_inherit"
+              inherit_id="stock.label_product_product_view">
+
+        <xpath expr="//t[@t-call='stock.alternative_zpl_label']"
+               position="after">
+
+            <t t-elif="'erzberger_51x19' in zpl_template"
+               t-call="erzberger_customizations.erzberger_51x19_zpl_label"/>
+
+        </xpath>
+
+    </template>
+
+</odoo>

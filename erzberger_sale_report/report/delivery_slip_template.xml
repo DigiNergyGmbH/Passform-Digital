@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!-- 
+
+<template id="external_layout_din5008_custom" inherit_id="l10n_din5008.external_layout_din5008">
+    <xpath expr="//table[@class='din_company_info table-borderless']" position="before">
+            <br/>
+                     <br/>
+                      <br/>
+                       <br/>
+                        <br/>
+                         <br/>
+                         <br/>
+                         <br/>
+                     
+                       
+         </xpath>
+ 
+   <xpath expr="//table[@class='company_header table-borderless']" position="replace">
+
+    <table width="100%" class="company_header table-borderless" t-att-style="'height: %dmm;' % (din_header_spacing or 27)">
+
+        <tr>
+
+         
+            <td width="60%" style="text-align:left;           padding-left:20px;              vertical-align:top;">
+
+                <div class="colored_address" style="padding-top:255px;                           text-align:left;                             white-space:nowrap;                             display:inline-block;                             font-size:10px;                             color:#315d35;                             font-weight:600;                             border-bottom:1px solid #315d35;                             padding-bottom:2px;">
+
+                    <t t-if="company.name">
+                        <span t-field="company.name"/>
+                    </t>
+
+                    <t t-if="company.street">
+                        <span>|</span>
+                        <span t-field="company.street"/>
+                    </t>
+
+                    <t t-if="company.street2">
+                        <span>|</span>
+                        <span t-field="company.street2"/>
+                    </t>
+
+                    <t t-if="company.zip">
+                        <span>|</span>
+                        <span t-field="company.zip"/>
+                    </t>
+
+                    <t t-if="company.city">
+                        <span t-if="not company.zip">|</span>
+                        <span t-field="company.city"/>
+                    </t>
+
+                    <t t-if="company.country_id">
+                        <span>|</span>
+                        <span t-field="company.country_id.name"/>
+                    </t>
+
+                </div>
+
+            </td>
+            <td width="20%" style="text-align:center; vertical-align:top;">
+
+    <div style="width:42mm; margin:0 auto; text-align:center;">
+
+        <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="height:48mm;                     width:42mm;                     display:block;                     margin:0 auto;"/>
+
+        <div style="margin-top:1mm;                     text-align:center;                     line-height:1.2;">
+            <span style="font-size:11px;                          color:#315d35;                          font-weight:600;">
+                Inhaber: Jens Kriegel
+            </span>
+        </div>
+
+        <div style="margin-top:3mm;                     text-align:center;                     line-height:1.15;">
+            <span style="font-size:11px;                          color:#315d35;                          font-weight:700;">
+                Handwerkliche<br/>
+                Holzkunst aus<br/>
+                dem Erzgebirge
+            </span>
+        </div>
+
+    </div>
+
+</td>
+
+ 
+            <td width="20%" style="text-align:right; padding-top:10px;                       vertical-align:top;">
+
+                <img src="/erzberger_sale_report/static/src/img/img_7.png" style="height:38mm;                             width:25mm;                             display:block;                             margin-left:auto;"/>
+
+                <br/>
+
+                <img src="/erzberger_sale_report/static/src/img/img_6.png" style="height:25mm;                             width:26mm;                             display:block;                             margin-left:auto;"/>
+
+            </td>
+
+        </tr>
+
+    </table>
+
+</xpath>
+
+<xpath expr="//div[contains(@class, 'footer') or contains(@t-attf-class, 'footer')]" position="replace">
+
+    <div class="din_page footer" style="background:transparent;                 background-color:transparent;                 color:#315d35;                 padding:0;                 margin:0;                 font-size:8px;                 width:100%;">
+
+        <table class="footer_table table-borderless" style="width:100%;                       border-collapse:collapse;                       border-spacing:0;                       background:transparent;                       background-color:transparent;                       color:#315d35;                       margin:0;                       padding:0;                       table-layout:fixed;">
+
+            <tr>
+
+                <td style="width:23%;                            padding:0 5px 0 5px;                            border-right:1px solid #9bb39c;                            vertical-align:top;                            background:transparent;                            color:#315d35;">
+
+                    <strong style="font-size:10px;                                    font-weight:700;                                    color:#315d35;                                    display:block;                                    margin:0;                                    padding:0;                                    line-height:1.15;">
+                        Fachgeschäft:
+                    </strong>
+
+                    <div style="font-size:9px;                                 color:#315d35;                                 line-height:1.20;                                 margin:1px 0 0 0;                                 padding:0;">
+
+                        <span>Erzberger Holzkunst</span><br/>
+                        <span>Lange Gasse 1</span><br/>
+                        <span>D-08297 Zwönitz/Erzgebirge</span>
+
+                    </div>
+
+                </td>
+
+
+                  
+                <td style="width:25%;                            padding:0 5px 0 10px;                            border-right:1px solid #9bb39c;                            vertical-align:top;                            background:transparent;                            color:#315d35;">
+
+                    <strong style="font-size:10px;                                    font-weight:700;                                    color:#315d35;                                    display:block;                                    margin:0;                                    padding:0;                                    line-height:1.15;">
+                        Büro:
+                    </strong>
+
+                    <div style="font-size:9px;                                 color:#315d35;                                 line-height:1.20;                                 margin:1px 0 0 0;                                 padding:0;">
+
+                      
+                        <span>Erzberger Holzkunst</span><br/>
+                        <span>Poststraße 19a</span><br/>
+                        <span>D-08297 Zwönitz OT Brünlos</span>
+
+                    </div>
+
+                </td>
+
+
+                  
+                <td style="width:27%;                            padding:0 5px 0 10px;                            border-right:1px solid #9bb39c;                            vertical-align:top;                            background:transparent;                            color:#315d35;">
+
+                    <strong style="font-size:10px;                                    font-weight:700;                                    color:#315d35;                                    display:block;                                    margin:0;                                    padding:0;                                    line-height:1.15;">
+                        Kontakt:
+                    </strong>
+
+                    <div style="font-size:9px;                                 color:#315d35;                                 line-height:1.20;                                 margin:1px 0 0 0;                                 padding:0;">
+
+                        <div t-if="company.phone">
+                            Telefon: <span>+49 (0) 3 72 96 - 93 28 93</span>
+                        </div>
+
+                        <div t-if="company.website">
+                            Website: <span>www.erzberger-holzkunst.de</span>
+                        </div>
+
+                        <div t-if="company.email">
+                            E-Mail: <span t-field="company.email"/>
+                        </div>
+
+                    </div>
+
+                </td>
+
+
+                  
+                <td style="width:25%;                            padding:0 0 0 10px;                            vertical-align:top;                            background:transparent;                            color:#315d35;">
+
+                    <strong style="font-size:10px;                                    font-weight:700;                                    color:#315d35;                                    display:block;                                    margin:0;                                    padding:0;                                    line-height:1.15;">
+                        Bankverbindung:
+                    </strong>
+
+                    <div style="font-size:9px;                                 color:#315d35;                                 line-height:1.20;                                 margin:1px 0 0 0;                                 padding:0;                                 width:100%;">
+
+                        <t>
+
+                            <t>
+
+                                <div>
+                                    <span>Erzgebirgssparkasse</span>
+                                </div>
+
+                                <div>
+                                    IBAN: <span>DE87 8705 4000 0725 0807 79</span>
+                                </div>
+
+                                <div>
+                                    BIC: <span>WELADED1STB</span>
+                                </div>
+
+                            </t>
+
+                        </t>
+
+                       
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+</xpath>
+</template> -->
+
+
+
+<template id="report_delivery_note">
+<t t-call="web.html_container">
+    <t t-foreach="docs" t-as="o">
+        <t t-set="company" t-value="o.company_id.sudo()"/>
+        <t t-call="erzberger_sale_report.report_erz_external_layouts">
+
+            <div style="font-family: Arial, sans-serif; font-size: 11pt; color: #222; padding: 0 0 4mm 0;">
+                <!-- <div style="position:fixed; top: 0mm; right: 0mm; z-index: -1;">
+                    <img t-att-src="'/erzberger_sale_report/static/src/img/img_5.png'" style="height:250mm; width:30.6mm; opacity:0.45;"/>
+                </div> -->
+
+                <!-- ── Space for header / address window ── -->
+                <!-- The external layout renders the address block above the page body.
+                     These spacers push the content below it. Adjust mm values to taste. -->
+<!--                <div style="height: 30mm;"></div>-->
+
+                <!-- ── Recipient address (printed in letter-window area) ── -->
+                
+                <div style="margin-bottom: 8mm; font-size: 11pt; line-height: 1.5;">
+
+                    <!-- Dropshipping -->
+                    <t t-if="o.picking_type_id.code == 'dropship' and o.purchase_id and o.purchase_id.dest_address_id">
+                        <strong t-field="o.purchase_id.dest_address_id.name"/><br/>
+
+                        <t t-if="o.purchase_id.dest_address_id.street">
+                            <span t-field="o.purchase_id.dest_address_id.street"/><br/>
+                        </t>
+
+                        <t t-if="o.purchase_id.dest_address_id.street2">
+                            <span t-field="o.purchase_id.dest_address_id.street2"/><br/>
+                        </t>
+
+                        <t t-if="o.purchase_id.dest_address_id.zip">
+                            <span t-field="o.purchase_id.dest_address_id.zip"/>
+                        </t>
+
+                        <t t-if="o.purchase_id.dest_address_id.city">
+                            <span t-field="o.purchase_id.dest_address_id.city"/>
+                        </t>
+                        <br/>
+
+                        <t t-if="o.purchase_id.dest_address_id.state_id">
+                            <span t-field="o.purchase_id.dest_address_id.state_id"/>
+                            <br/>
+                        </t>
+
+                        <t t-if="o.purchase_id.dest_address_id.country_id">
+                            <span t-field="o.purchase_id.dest_address_id.country_id"/>
+                        </t>
+                    </t>
+
+                    <!-- Normal Delivery -->
+                    <t t-else="">
+                        <strong t-field="o.partner_id.name"/><br/>
+
+                        <t t-if="o.partner_id.street">
+                            <span t-field="o.partner_id.street"/><br/>
+                        </t>
+
+                        <t t-if="o.partner_id.street2">
+                            <span t-field="o.partner_id.street2"/><br/>
+                        </t>
+
+                        <t t-if="o.partner_id.zip">
+                            <span t-field="o.partner_id.zip"/>
+                        </t>
+
+                        <t t-if="o.partner_id.city">
+                            <span t-field="o.partner_id.city"/>
+                        </t>
+                        <br/>
+
+                        <t t-if="o.partner_id.state_id">
+                            <span t-field="o.partner_id.state_id"/>
+                            <br/>
+                        </t>
+
+                        <t t-if="o.partner_id.country_id">
+                            <span t-field="o.partner_id.country_id"/>
+                        </t>
+                    </t>
+
+                </div>
+
+                <!-- ── Title row: "Lieferschein" left | Date right ── -->
+                <table style="width:100%; border-collapse:collapse; margin-bottom:6mm; border:1px solid white;">
+                    <tr>
+                        <td style="width:80%;vertical-align:bottom; border:1px solid white;">
+                            <span style="font-size:20pt; font-weight:bold; text-decoration:underline;">
+                                Lieferschein
+                            </span>
+                        </td>
+                        <td style="width:20%;text-align:left; vertical-align:bottom; font-size:11pt; border:1px solid white;">
+                            <t t-set="slip_date" t-value="o.date_done or o.scheduled_date"/>
+                            Datum: 
+                            <span t-if="slip_date" t-field="o.date_done" t-options="{&quot;widget&quot;:&quot;date&quot;,&quot;format&quot;:&quot;dd.MM.yyyy&quot;}"/><br/>
+                            <t t-if="o.scheduled_date"><p>Liefertermin: <span t-field="o.scheduled_date" t-options="{&quot;widget&quot;:&quot;date&quot;,&quot;format&quot;:&quot;dd.MM.yyyy&quot;}"/></p></t>
+                        </td>
+                    </tr>
+                    
+                    
+                </table>
+
+                <!-- ── Column-header row ── -->
+                <table style="width:100%; border-collapse:collapse; margin-bottom:2mm; border:1px solid white;">
+                    <thead>
+                        <tr style="border:1px solid white;">
+                            <th style="width:18%; text-align:left; padding:1.5mm 2mm; font-weight:bold; font-size:11pt; border:1px solid white;">Menge</th>
+                            <th style="width:12%; text-align:left; padding:1.5mm 2mm; font-weight:bold; font-size:11pt; border:1px solid white;">ME</th>
+                            <th style="width:20%; text-align:left; padding:1.5mm 2mm; font-weight:bold; font-size:11pt; border:1px solid white;">Produkt</th>
+                            <th style="width:60%; text-align:left; padding:1.5mm 2mm; font-weight:bold; font-size:11pt; border:1px solid white;">Bezeichnung</th>
+                        </tr>
+                    </thead>
+                </table>
+
+                <!-- ── Move lines grouped by origin / order reference ── -->
+                <!--
+                    We group move lines by origin so each customer order gets its own
+                    "Bestellnummer:" header line, matching the PDF layout.
+                    If you only ever have one origin per picking you can drop the grouping.
+                -->
+                <t t-set="lines" t-value="o.move_ids.filtered(lambda m: m.state != 'cancel' and m.product_uom_qty)"/>
+
+                <!-- Order-reference header (bold, before the lines) -->
+                <t t-if="o.origin">
+                    <div style="font-weight:bold; font-size:10pt; margin-bottom:2mm;">
+                        Bestellnummer: <span t-field="o.origin"/>
+                    </div>
+                </t>
+                <t t-if="o.po_number">
+                    <div style="font-weight:bold; font-size:10pt; margin-bottom:2mm;">
+                        PO-Nr.: <span t-field="o.po_number"/>
+                    </div>
+                </t>
+
+                <!-- Line items -->
+                <table style="width:100%; border-collapse:collapse; margin-bottom:4mm; border:1px solid white;">
+                    <tbody>
+                        <t t-foreach="lines" t-as="move">
+
+                            <!-- Section header from sale order line (display_type section) -->
+<!--                            <t t-if="move.sale_line_id and move.sale_line_id.display_type == 'line_section'">-->
+<!--                                <tr>-->
+<!--                                    <td colspan="3" style="font-weight:bold; padding:1mm 2mm; font-size:9pt;">-->
+<!--                                        <span t-field="move.sale_line_id.name"/>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                            </t>-->
+
+                            <!-- Regular product line -->
+<!--                            <t t-else="">-->
+                                <tr style="vertical-align:top; border:1px solid white;">
+                                    <!-- Quantity -->
+                                    <td style="width:18%; padding:0.8mm 2mm; font-size:11pt; white-space:nowrap; border:1px solid white;">
+                                        <t t-set="qty" t-value="move.quantity if o.state == 'done' else move.product_uom_qty"/>
+                                        <span t-out="int(qty) if qty == int(qty) else qty"/>
+                                    </td>
+                                    <!-- Unit of measure -->
+                                    <td style="width:12%; padding:0.8mm 2mm; font-size:11pt; border:1px solid white;">
+                                        <span t-field="move.product_uom" groups="uom.group_uom"/>
+                                    </td>
+
+                                    <!-- Product description block -->
+                                    <td style="width:20%; padding:0.8mm 2mm; font-size:11pt; border:1px solid white;">
+                                        <!-- Main product name -->
+                                        <span t-field="move.product_id.name"/>
+                                        <!-- Optional: picking description (e.g. "Frischer Genuss") -->
+                                        <t t-if="move.description_picking                                                  and move.description_picking != move.product_id.name                                                  and move.description_picking != move.product_id.display_name">
+                                            <br/>
+                                            <span t-out="move.description_picking" t-options="{'widget':'text'}"/>
+                                        </t>
+                                        <!-- Internal reference / Art.-Nr. -->
+                                        <t t-if="move.product_id.default_code">
+                                            <br/>
+                                            <span style="font-size:10pt;">
+                                                Art.Nr. <span t-field="move.product_id.default_code"/>
+                                            </span>
+                                        </t>
+
+                                    </td>
+                                    <td style="width:60%; padding:0.8mm 2mm; font-size:11pt; line-height:1.4; border:1px solid white;">
+                                        <span t-field="move.product_id.description_sale"/>
+                                    </td>
+                                </tr>
+<!--                            </t>-->
+                        </t>
+                    </tbody>
+                </table>
+
+                <t t-if="o.note and not is_html_empty(o.note)">
+                    <style>
+                        .note-tbl, .note-tbl tbody, .note-tbl tr, .note-tbl td {
+                            border: none !important;
+                            border-top: none !important;
+                            border-bottom: none !important;
+                            border-left: none !important;
+                            border-right: none !important;
+                            outline: none !important;
+                            box-shadow: none !important;
+                            background: transparent !important;
+                        }
+                        .note-cell p {
+                            margin-top: 0 !important;
+                            margin-bottom: 0 !important;
+                        }
+                        .note-cell p:first-child {
+                            display: inline !important;
+                        }
+                    </style>
+                    <table class="note-tbl" style="width:100%; border-collapse:collapse; margin-top:4mm; font-size:9pt;">
+                        <tr>
+                            <td style="vertical-align:top; white-space:nowrap; padding:0 6px 0 0; width:1%;font-size:11pt;">
+                                <strong>Note :</strong>
+                            </td>
+                            <td class="note-cell" style="vertical-align:top; padding:0;font-size:11pt;">
+                                <span t-field="o.note"/>
+                            </td>
+                        </tr>
+                    </table>
+                </t>
+
+                <!-- ── Back-order remainder (if any) ── -->
+<!--                <t t-set="backorders" t-value="o.backorder_ids.filtered(lambda x: x.state not in ('done','cancel'))"/>-->
+<!--                <t t-if="backorders">-->
+<!--                    <div style="margin-top:4mm; font-size:9pt;">-->
+<!--                        <span>Noch ausstehende Mengen (nicht geliefert):</span>-->
+<!--                    </div>-->
+<!--                    <table style="width:100%; border-collapse:collapse; margin-top:2mm;">-->
+<!--                        <thead>-->
+<!--                            <tr style="border-top:1px solid #222; border-bottom:1px solid #222;">-->
+<!--                                <th style="width:18%; padding:1mm 2mm; text-align:left; font-size:9pt;">Menge</th>-->
+<!--                                <th style="width:12%; padding:1mm 2mm; text-align:left; font-size:9pt;">ME</th>-->
+<!--                                <th style="width:70%; padding:1mm 2mm; text-align:left; font-size:9pt;">Bezeichnung</th>-->
+<!--                            </tr>-->
+<!--                        </thead>-->
+<!--                        <tbody>-->
+<!--                            <t t-foreach="backorders.mapped('move_ids').filtered(lambda x: x.product_uom_qty)" t-as="bo">-->
+<!--                                <tr style="vertical-align:top;">-->
+<!--                                    <td style="width:18%; padding:0.8mm 2mm; font-size:9pt;">-->
+<!--                                        <t t-set="boqty" t-value="bo.product_uom_qty"/>-->
+<!--                                        <span t-out="int(boqty) if boqty == int(boqty) else boqty"/>-->
+<!--                                    </td>-->
+<!--                                    <td style="width:12%; padding:0.8mm 2mm; font-size:9pt;">-->
+<!--                                        <span t-field="bo.product_uom" groups="uom.group_uom"/>-->
+<!--                                    </td>-->
+<!--                                    <td style="width:70%; padding:0.8mm 2mm; font-size:9pt;">-->
+<!--                                        <span t-field="bo.product_id.display_name"/>-->
+<!--                                        <t t-if="bo.product_id.default_code">-->
+<!--                                            <br/>-->
+<!--                                            <span style="font-size:8.5pt;">Art.Nr.&#160;<span t-field="bo.product_id.default_code"/></span>-->
+<!--                                        </t>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                            </t>-->
+<!--                        </tbody>-->
+<!--                    </table>-->
+<!--                </t>-->
+
+                <!-- ── Signature block (optional) ── -->
+<!--                <t t-if="o.signature">-->
+<!--                    <div style="margin-top:12mm;">-->
+<!--                        <div style="width:60%; border-top:1px solid #222; padding-top:2mm; font-size:9pt;">-->
+<!--                            Unterschrift / Signature-->
+<!--                        </div>-->
+<!--                        <div style="margin-top:2mm;">-->
+<!--                            <img t-att-src="image_data_uri(o.signature)"-->
+<!--                                 style="max-height:3.5cm; max-width:7cm;"/>-->
+<!--                        </div>-->
+<!--                        <t t-if="o.partner_id.name">-->
+<!--                            <div style="font-size:9pt; margin-top:1mm;">-->
+<!--                                <span t-field="o.partner_id.name"/>-->
+<!--                            </div>-->
+<!--                        </t>-->
+<!--                    </div>-->
+<!--                </t>-->
+
+            </div><!-- /page div -->
+
+        </t><!-- /external_layout -->
+    </t><!-- /foreach -->
+</t><!-- /html_container -->
+</template>
+
+</odoo>

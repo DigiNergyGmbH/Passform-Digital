@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_order_form_auftragsbestatigung_btn" model="ir.ui.view">
+        <field name="name">sale.order.form.auftragsbestatigung.button</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//header//button[@name='sale.action_report_saleorder']" position="replace">
+                <button
+                    string="Drucken"
+                    name="action_print_custom"
+                    type="object"
+                    data-hotkey="i"/>
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="is_note" invisible="1"/>
+            </xpath>
+                        <xpath expr="//field[@name='client_order_ref']" position="after">
+                <field name="customer_note" invisible="state != 'sale'"/>
+            </xpath>
+        </field>
+    </record>
+
+    <template id="sale_order_portal_remove_connect_button"
+          inherit_id="sale.sale_order_portal_template">
+
+        <xpath expr="//button[@id='portal_connect_software_modal_btn']"
+               position="replace"/>
+
+    </template>
+
+    <template id="remove_purchase_portal_connect_button"
+          inherit_id="purchase.portal_my_purchase_order">
+
+        <xpath expr="//button[@id='portal_connect_software_modal_btn']"
+               position="replace"/>
+
+    </template>
+
+    <template id="remove_portal_powered_by_odoo"
+          inherit_id="portal.portal_record_sidebar">
+
+        <xpath expr="//div[contains(@class, 'd-none') and contains(@class, 'd-lg-block') and contains(@class, 'text-muted')]"
+               position="replace"/>
+
+    </template>
+
+
+
+</odoo>
