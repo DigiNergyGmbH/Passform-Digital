@@ -1,0 +1,62 @@
+name: Watch upstream addons
+
+# Reports when a vendored upstream repository has new commits, by comparing its
+# current default branch against the frozen snapshot branch in this repository.
+# Runs daily; also startable by hand from the Actions tab.
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Add upstream remote
+        run: |
+          git remote remove akshara 2>/dev/null || true
+          git remote add akshara https://github.com/AksharaBiju2025/erzberger_addons.git
+
+      - name: Check upstream against the snapshot
+        id: check
+        run: |
+          set +e
+          out=$(bash scripts/check-upstream.sh akshara main vendor/erzberger-addons 2>&1)
+          code=$?
+          set -e
+          printf '%s\n' "$out"
+          {
+            echo 'result<<EOF'
+            printf '%s\n' "$out"
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Open an issue when upstream moved
+        if: steps.check.outputs.code == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RESULT: ${{ steps.check.outputs.result }}
+        run: |
+          title="Upstream erzberger_addons has new commits"
+          open=$(gh issue list --state open --search "$title in:title" --json number --jq 'length')
+          if [ "$open" != "0" ]; then
+            echo "an open issue already tracks this"
+            exit 0
+          fi
+          {
+            printf 'The snapshot branch `vendor/erzberger-addons` is behind upstream `AksharaBiju2025/erzberger_addons`.\n\n'
+            printf '```\n%s\n```\n\n' "$RESULT"
+            printf 'Re-import:\n\n```bash\ngit fetch akshara\ngit checkout ezberger/staging\ngit merge akshara/main\ngit push origin ezberger/staging\ngit push origin akshara/main:refs/heads/vendor/erzberger-addons\n```\n'
+          } > /tmp/body.md
+          gh issue create --title "$title" --body-file /tmp/body.md

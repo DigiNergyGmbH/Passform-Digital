@@ -160,6 +160,43 @@ git push origin <client>/staging
 git push origin akshara/main:refs/heads/vendor/<name>    # re-freeze the snapshot
 ```
 
+## Tracking upstream changes
+
+The snapshot branch is the single source of truth for "which upstream commit do
+we have". Detecting that upstream moved is a comparison against it:
+
+```bash
+bash scripts/check-upstream.sh                       # akshara main vendor/erzberger-addons
+```
+
+| exit code | meaning |
+| --- | --- |
+| `0` | upstream unchanged — snapshot equals upstream default branch |
+| `1` | upstream moved — new commits and changed files are listed |
+| `2` | could not check (not a repo, remote missing, fetch failed) |
+
+`BASE=<ref>` compares against an arbitrary ref instead of the snapshot, which is
+useful for reviewing a proposed update before accepting it.
+
+Two ways to run it:
+
+- **On a server**, from cron, so a stale clone is noticed without anyone
+  remembering to look:
+
+  ```cron
+  0 6 * * * cd /path/to/addons && bash scripts/check-upstream.sh >> /var/log/odoo/upstream-check.log 2>&1
+  ```
+
+  Exit code `1` can be wired into whatever alerting already exists.
+
+- **In CI**, `.github/workflows/watch-upstream.yml` runs daily and opens an
+  issue titled *Upstream erzberger_addons has new commits* containing the new
+  commits and changed files. It needs no secrets.
+
+Adding another upstream means adding its remote and repeating the pattern with
+its own `vendor/<name>` branch; the script takes the remote, branch and vendor
+branch as arguments, so one script covers every import.
+
 ## Protected branches
 
 The branch rulesets `refs/heads/*/prod` and `refs/heads/*/staging` block force
