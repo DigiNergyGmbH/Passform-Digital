@@ -9,9 +9,13 @@ each other.
 | Branch | Purpose |
 | --- | --- |
 | `main` | Scaffolding and documentation only (branch model, layout, tooling). No client modules. |
-| `core` | Modules shared by more than one client, kept client-agnostic. |
 | `<client>/staging` | Acceptance / staging environment for one client. |
 | `<client>/prod` | Production environment for one client. |
+| `vendor/<name>` | Frozen snapshot of an external upstream repository. Never deployed on its own. |
+
+A `core` branch is introduced only when a module is genuinely shared by more
+than one client; the branch ruleset already covers the name, so it is protected
+the moment it is created.
 
 `<client>` is a lowercase slug without spaces or separators (client *Ezberger*
 becomes `ezberger`, client *Passform Digital* becomes `passform`).
@@ -28,12 +32,12 @@ branch.
 
 ## Creating a client
 
-Branch from `core` (or `main` when `core` is empty) — never from another
-client's branch, which would inherit that client's modules and history.
+Branch from `main` — never from another client's branch, which would inherit
+that client's modules and history.
 
 ```bash
 git fetch origin
-git checkout -b <client>/staging origin/core
+git checkout -b <client>/staging origin/main
 git push -u origin <client>/staging
 
 git checkout -b <client>/prod origin/<client>/staging
@@ -69,8 +73,9 @@ production code flows downwards.
 
 ## Shared modules
 
-Changes meant for several clients land on `core` first, then are merged
-upwards into each affected client branch:
+If a module ever has to serve more than one client, create a `core` branch from
+`main`, put the module there, and merge it upwards into each affected client
+branch:
 
 ```bash
 git checkout <client>/staging
@@ -78,15 +83,14 @@ git merge core
 ```
 
 Each client branch is free to stay behind `core` when it must not receive a
-change yet.
+change yet. Until a module is genuinely shared, `core` does not exist.
 
 ## Module layout
 
 Modules sit at the repository root, one directory per Odoo module:
 
 ```
-<module_name>/        # client modules, on that client's branches
-<module_name>/        # shared modules, on core
+<module_name>/
 ```
 
 The branch name already identifies the client, so repeating the client in the
@@ -94,6 +98,28 @@ path is unnecessary. Point the instance's `addons_path` at the checkout
 directory itself. A module directory is never renamed once the module is
 installed — Odoo records the module name in the database, and renaming the
 directory breaks that record.
+
+## Deployment: one checkout per instance
+
+An Odoo instance scans `addons_path` and builds its module list from the
+directories it finds. If two directories on that path contain a module with the
+same name, Odoo reports a duplicate and which copy wins is not predictable, so
+edits can silently fail to apply.
+
+Therefore exactly one checkout is ever placed on an instance's `addons_path`:
+the client branch, which already contains the vendored upstream modules. The
+`vendor/*` branch is a reference for diffing only and is never checked out on a
+server, and never placed on `addons_path`. Because both branches reference the
+same objects, this costs no additional disk space or bandwidth.
+
+Deploy by checking out the branch on the server and updating it with a pull,
+so the repository remains the single source of truth:
+
+```bash
+git -C /path/to/addons fetch origin
+git -C /path/to/addons checkout <client>/<env>
+git -C /path/to/addons pull --ff-only
+```
 
 ## Vendored external addons
 
@@ -137,10 +163,10 @@ git push origin akshara/main:refs/heads/vendor/<name>    # re-freeze the snapsho
 ## Protected branches
 
 The branch rulesets `refs/heads/*/prod` and `refs/heads/*/staging` block force
-pushes and deletions and require a pull request before merging. `main`, `core`
-and `vendor/*` are protected the same way. Repository administrators are listed
-as bypass actors, so an emergency push stays possible without weakening the
-rule for everyone else.
+pushes and deletions and require a pull request before merging. `main`,
+`core` and `vendor/*` are protected the same way. Repository administrators are
+listed as bypass actors, so an emergency push stays possible without weakening
+the rule for everyone else.
 
 ## Local development
 
