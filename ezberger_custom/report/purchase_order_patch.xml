@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        Purchase order (Bestellung) - core report purchase.report_purchaseorder_document.
+
+        The core template always prints the label "Payment Terms: / Zahlungsbedingungen:"
+        even when the purchase order has no payment term, which produces an empty
+        line on the PDF (see Bestellung P00044).  The label is now conditional;
+        the value node itself already prints nothing when empty.
+
+        NOTE: the real cause of item 4 of the to-do list is on the vendor master
+        data - "15 Tage" has to be stored as *supplier* payment term on the vendor
+        (and its parent company contact).  ezberger_custom/models/purchase_order.py
+        adds a fallback that also looks at the commercial partner.
+    -->
+
+    <record id="report_purchaseorder_document_payment_term" model="ir.ui.view">
+        <field name="name">report.purchaseorder.document.payment.term</field>
+        <field name="inherit_id" ref="purchase.report_purchaseorder_document"/>
+        <field name="arch" type="xml">
+            <xpath expr="//strong[normalize-space(text())='Payment Terms:']"
+                   position="attributes">
+                <attribute name="t-if">o.payment_term_id</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

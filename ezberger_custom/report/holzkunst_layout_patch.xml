@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        Letterhead fixes.
+
+        a) Erzberger Holzkunst (custom_report.xml, report_erz_external_layouts_holzkenber):
+           the company logo was forced to width:42mm AND height:48mm, which
+           squashes any logo that is not exactly that ratio ("Logo gestaucht").
+           Height is now automatic so the ratio is kept.
+
+        a2) The two seals the customer mailed in ("Logo Fachhandelsring siehe
+            unten", "ECHT ERZGEBIRGE") are shipped upstream as static/src/img/
+            img_6.png and img_7.png, but both files are JPEG (img_6 is CMYK,
+            2454x2591; img_7 is 2296x3304) stored under a .png extension, so they
+            are served as image/png with JPEG content - CMYK in a print pipeline
+            gives unpredictable colours, which is what "Falsche Farbe" may refer
+            to. Both also had a fixed width AND height. We do not touch the
+            vendor module: the src is pointed at a real RGB PNG in this module
+            and the height is released, so the seal keeps its ratio.
+            Replace the two files here if the customer supplies different seals.
+
+        b) Verpackungssysteme letterhead (report_erz_external_layouts):
+           the website is printed with its protocol ("http://www...").
+           The protocol is stripped for the printout.
+    -->
+
+    <record id="report_erz_external_layouts_holzkenber_client" model="ir.ui.view">
+        <field name="name">report.erz.external.layouts.holzkunst.client</field>
+        <field name="inherit_id"
+               ref="erzberger_sale_report.report_erz_external_layouts_holzkenber"/>
+        <field name="arch" type="xml">
+            <xpath expr="//img[@t-if='company.logo']" position="attributes">
+                <attribute name="style">width:42mm; height:auto; display:block; margin:0 auto !important; padding:0 !important; border:0 !important;</attribute>
+            </xpath>
+            <xpath expr="//img[contains(@src, 'img_6.png')]" position="attributes">
+                <attribute name="src">/ezberger_custom/static/src/img/logo_fachhandelsring.png</attribute>
+                <attribute name="style">width:26mm; height:auto; display:block; margin:0 0 0 auto !important; padding:0 !important; border:0 !important;</attribute>
+            </xpath>
+            <xpath expr="//img[contains(@src, 'img_7.png')]" position="attributes">
+                <attribute name="src">/ezberger_custom/static/src/img/logo_echt_erzgebirge.png</attribute>
+                <attribute name="style">width:25mm; height:auto; display:block; margin:0 0 0 auto !important; padding:0 !important; border:0 !important;</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="report_erz_external_layouts_client" model="ir.ui.view">
+        <field name="name">report.erz.external.layouts.client</field>
+        <field name="inherit_id"
+               ref="erzberger_sale_report.report_erz_external_layouts"/>
+        <field name="arch" type="xml">
+            <xpath expr="//t[@t-esc='company.website']" position="replace">
+                <t t-esc="(company.website or '').replace('https://', '').replace('http://', '')"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        Auftragsbestätigung (Erzberger Verpackungssysteme) - adjustments
+        Target: erzberger_sale_report.report_auftragsbestatigung_documents
+
+        1) "(Ihr Auftrag v. <Datum> p. Email v. <Bearbeiter>)": the Erzberger
+           employee must not be printed there.  The manually filled
+           customer_contact_name (orderer at the customer) is printed instead;
+           when it is empty the whole line disappears.
+        2) Delivery date as calendar week (KW) right below "Datum:".
+    -->
+
+    <record id="report_auftragsbestatigung_documents_client" model="ir.ui.view">
+        <field name="name">report.auftragsbestatigung.documents.client</field>
+        <field name="inherit_id"
+               ref="erzberger_sale_report.report_auftragsbestatigung_documents"/>
+        <field name="arch" type="xml">
+
+            <!-- 1) orderer at the customer instead of the Erzberger employee -->
+            <xpath expr="//div[@class='erz-ref']/t[@t-if='doc.partner_id.name']"
+                   position="replace">
+                <t t-if="doc.customer_contact_name">
+                    (Ihr Auftrag v.
+                    <span t-field="doc.date_order"
+                          t-options="{&quot;widget&quot;:&quot;date&quot;,&quot;format&quot;:&quot;dd.MM.yyyy&quot;}"/>
+                    p. Email v. <t t-esc="doc.customer_contact_name"/>)<br/>
+                </t>
+            </xpath>
+
+            <!-- 2) delivery date as calendar week -->
+            <xpath expr="//td[@class='meta-lbl'][normalize-space(text())='Datum:']/parent::tr"
+                   position="after">
+                <tr t-if="doc.commitment_date" style="border:1px solid white;">
+                    <td class="meta-lbl"
+                        style="border:1px solid white; font-size: 11pt; padding-left:50px;">Liefertermin:</td>
+                    <td class="meta-val"
+                        style="border:1px solid white; font-size: 11pt; text-align:left;">KW <t t-esc="doc.commitment_date.strftime('%V')"/></td>
+                </tr>
+            </xpath>
+
+            <!-- 3) column headers (annotations "Einheit" / "kg / 1.000 Stück / Stück"
+                    on the Angebot S00040) - the possible units are spelled out and
+                    the unit of measure is printed with the quantity -->
+            <xpath expr="//th[@class='tl']/span[@class='sub'][normalize-space(text())='kg/Stück']"
+                   position="replace">
+                <span class="sub">Einheit</span>
+            </xpath>
+
+            <xpath expr="//th[@class='tr']/span[@class='sub'][normalize-space(text())='per kg/1.000 Stück']"
+                   position="replace">
+                <span class="sub">kg / 1.000 Stück / Stück</span>
+            </xpath>
+
+            <xpath expr="//span[@t-field='line.product_uom_qty']" position="after">
+                <span class="sub" t-esc="line.product_uom_id.name"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>
