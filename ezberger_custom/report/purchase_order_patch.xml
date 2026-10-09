@@ -19,7 +19,10 @@
         <field name="name">report.purchaseorder.document.payment.term</field>
         <field name="inherit_id" ref="purchase.report_purchaseorder_document"/>
         <field name="arch" type="xml">
-            <xpath expr="//strong[normalize-space(text())='Payment Terms:']"
+            <!-- anchored on the field, not the label text: the label is
+                 translated (de_DE "Zahlungsbedingungen:") and inheritance is
+                 applied per language, so a text match breaks the German PDF -->
+            <xpath expr="//span[@t-field='o.payment_term_id']/preceding-sibling::strong[1]"
                    position="attributes">
                 <attribute name="t-if">o.payment_term_id</attribute>
             </xpath>
