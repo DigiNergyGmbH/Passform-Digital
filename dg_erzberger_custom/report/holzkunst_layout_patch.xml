@@ -34,11 +34,11 @@
                 <attribute name="style">width:42mm; height:auto; display:block; margin:0 auto !important; padding:0 !important; border:0 !important;</attribute>
             </xpath>
             <xpath expr="//img[contains(@src, 'img_6.png')]" position="attributes">
-                <attribute name="src">/ezberger_custom/static/src/img/logo_fachhandelsring.png</attribute>
+                <attribute name="src">/dg_erzberger_custom/static/src/img/logo_fachhandelsring.png</attribute>
                 <attribute name="style">width:26mm; height:auto; display:block; margin:0 0 0 auto !important; padding:0 !important; border:0 !important;</attribute>
             </xpath>
             <xpath expr="//img[contains(@src, 'img_7.png')]" position="attributes">
-                <attribute name="src">/ezberger_custom/static/src/img/logo_echt_erzgebirge.png</attribute>
+                <attribute name="src">/dg_erzberger_custom/static/src/img/logo_echt_erzgebirge.png</attribute>
                 <attribute name="style">width:25mm; height:auto; display:block; margin:0 0 0 auto !important; padding:0 !important; border:0 !important;</attribute>
             </xpath>
         </field>

@@ -1,4 +1,4 @@
-# ezberger_custom
+# dg_erzberger_custom
 
 Client-specific changes for the **Erzberger Verpackungssysteme / Erzberger Holzkunst**
 instance. The vendored upstream modules stay untouched; this module only inherits

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'Erzberger Client Customizations',
+    'name': 'DG Erzberger Custom',
     'version': '19.0.1.0.0',
     'summary': 'Client-specific changes on top of the vendored Erzberger modules',
     'description': """

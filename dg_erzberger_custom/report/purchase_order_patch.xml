@@ -11,7 +11,7 @@
 
         NOTE: the real cause of item 4 of the to-do list is on the vendor master
         data - "15 Tage" has to be stored as *supplier* payment term on the vendor
-        (and its parent company contact).  ezberger_custom/models/purchase_order.py
+        (and its parent company contact).  dg_erzberger_custom/models/purchase_order.py
         adds a fallback that also looks at the commercial partner.
     -->
 
