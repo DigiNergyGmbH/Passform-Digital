@@ -30,6 +30,14 @@
         <field name="inherit_id"
                ref="erzberger_sale_report.report_erz_external_layouts_holzkenber"/>
         <field name="arch" type="xml">
+            <!-- Customer feedback (Stefan): logos sat flush with the top edge
+                 of the paper (y = 0 mm) - "it could be set even lower".
+                 The whole logo block (main logo + both seals) moves down
+                 8 mm. The header area ends at 65 mm (paperformat margin_top)
+                 and the block ended at 51 mm, so it still fits. -->
+            <xpath expr="//div[hasclass('header')]" position="attributes">
+                <attribute name="style">width:100%; margin:0 !important; padding:8mm 0 0 0 !important; background:#ffffff !important; font-family:Arial, sans-serif !important; color:#315d35; border:0 !important;</attribute>
+            </xpath>
             <xpath expr="//img[@t-if='company.logo']" position="attributes">
                 <attribute name="style">width:42mm; height:auto; display:block; margin:0 auto !important; padding:0 !important; border:0 !important;</attribute>
             </xpath>
