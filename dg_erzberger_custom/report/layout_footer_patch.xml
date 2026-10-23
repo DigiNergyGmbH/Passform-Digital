@@ -43,4 +43,19 @@
         </field>
     </record>
 
+    <!-- Holzkunst letterhead: "Zwönitz/Erzgebirge" in the Fachgeschäft column -->
+    <record id="report_erz_external_layouts_holzkunst_footer_client" model="ir.ui.view">
+        <field name="name">report.erz.external.layouts.holzkunst.footer.client</field>
+        <field name="inherit_id" ref="erzberger_sale_report.report_erz_external_layouts_holzkenber"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[contains(normalize-space(.), 'Lange Gasse 1')][not(.//div)]" position="replace">
+                <div style="margin:1mm 0 0 0 !important; padding:0 !important; font-family:Arial, sans-serif !important; font-size:10.5px !important; line-height:1.25 !important; color:#315d35 !important;">
+                    Erzberger Holzkunst<br/>
+                    Lange Gasse 1<br/>
+                    D-08297 Zwönitz / Erzgebirge
+                </div>
+            </xpath>
+        </field>
+    </record>
+
 </odoo>
