@@ -52,7 +52,7 @@ configuration work on the live instance.
         'report/holzkunst_layout_patch.xml',
         'report/purchase_order_patch.xml',
         'report/layout_footer_patch.xml',
-        'report/purchase_order_report.xml',
+        'report/purchase_order_header_patch.xml',
     ],
     'installable': True,
     'application': False,
