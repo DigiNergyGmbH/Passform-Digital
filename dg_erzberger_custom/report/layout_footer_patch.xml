@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        Shared letterhead / footer (erzberger_sale_report.report_erz_external_layouts).
+
+        Customer feedback on the printed footer:
+
+        1. "Zwönitz/Erzgebirge" -> the slash needs a space on both sides.
+        2. "Deutschland/Deutschland" -> the country is printed on both sides of
+           the slash, because the template renders the literal "Deutschland/"
+           followed by company.country_id.name.  For a German company that is
+           the same word twice.  The English side has to be "Germany", exactly
+           like the "Firmensitz / Headquarter" column next to it.
+
+        Both lines are in the vendored module, so they are patched here instead
+        of editing erzberger_sale_report.
+    -->
+
+    <record id="report_erz_external_layouts_footer_client" model="ir.ui.view">
+        <field name="name">report.erz.external.layouts.footer.client</field>
+        <field name="inherit_id"
+               ref="erzberger_sale_report.report_erz_external_layouts"/>
+        <field name="arch" type="xml">
+            <!-- 3) Company logo in the header.
+                 It was printed with a fixed width of 440px and automatic
+                 height.  The Holzkunst logo is much taller than the
+                 Verpackungssysteme wordmark, so the header grew by ~58mm and
+                 pushed the product range block down into the body: the blue
+                 product list then collided with the meta block of the
+                 document.  The logo is now limited by height, so both
+                 companies keep the same header height. -->
+            <xpath expr="//img[contains(@t-att-src,'image_data_uri(company.logo)')]"
+                   position="attributes">
+                <attribute name="style">height:20mm; width:auto; max-width:440px; display:block;</attribute>
+            </xpath>
+            <xpath expr="//span[contains(@style,'#12b6e3')][.//t[@t-esc='company.zip']]"
+                   position="replace">
+                <span style="color:#12b6e3;"><t t-esc="company.street"/> <t t-esc="company.street2"/><br/>
+                D-<t t-esc="company.zip"/> <t t-esc="company.city"/> / Erzgebirge<br/>
+                <t t-if="company.country_id.code == 'DE'">Deutschland / Germany</t><t t-else=""><t t-esc="company.country_id.name"/></t></span>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

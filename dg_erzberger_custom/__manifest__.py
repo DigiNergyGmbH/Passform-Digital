@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'DG Erzberger Custom',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.1.0',
     'summary': 'Client-specific changes on top of the vendored Erzberger modules',
     'description': """
 Erzberger Verpackungssysteme / Erzberger Holzkunst - client changes
@@ -27,6 +27,10 @@ Content:
 * Holzkunst letterhead: company logo no longer forced to a fixed
   width/height ratio (was printed squashed).
 * Purchase order report: "Payment Terms" label hidden when no term is set.
+* Purchase order report re-styled to the invoice format (same letterhead,
+  same body layout) instead of the standard Odoo purchase layout.
+* Shared letterhead footer: spaced slash ("Zwönitz / Erzgebirge") and the
+  country line no longer prints "Deutschland/Deutschland".
 
 See ``README.md`` for the to-do mapping and the items that are data /
 configuration work on the live instance.
@@ -47,6 +51,8 @@ configuration work on the live instance.
         'report/auftragsbestaetigung_patch.xml',
         'report/holzkunst_layout_patch.xml',
         'report/purchase_order_patch.xml',
+        'report/layout_footer_patch.xml',
+        'report/purchase_order_report.xml',
     ],
     'installable': True,
     'application': False,
