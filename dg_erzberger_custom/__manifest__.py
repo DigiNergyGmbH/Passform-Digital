@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'DG Erzberger Custom',
-    'version': '19.0.1.4.0',
+    'version': '19.0.1.5.0',
     'summary': 'Client-specific changes on top of the vendored Erzberger modules',
     'description': """
 Erzberger Verpackungssysteme / Erzberger Holzkunst - client changes
@@ -29,6 +29,9 @@ Content:
 * Purchase order report: "Payment Terms" label hidden when no term is set.
 * Purchase order report re-styled to the invoice format (same letterhead,
   same body layout) instead of the standard Odoo purchase layout.
+* Rechnung: the Factur-X/ZUGFeRD hybrid PDF is built from the Erzberger
+  invoice layout instead of the standard Odoo report (journal default +
+  account.custom_templates_facturx_list).
 * Rechnung: po_number compute fixed for Odoo 19 (the vendored one uses the
   removed sale.order.procurement_group_id and broke printing of new invoices).
 * Rechnung: the quotation text (Terms and conditions, also the text coming
@@ -62,7 +65,9 @@ configuration work on the live instance.
         'report/layout_footer_patch.xml',
         'report/purchase_order_report.xml',
         'report/delivery_slip_customer_ref.xml',
+        'data/ir_config_parameter.xml',
     ],
+    'post_init_hook': 'hooks.set_journal_invoice_templates',
     'installable': True,
     'application': False,
     'auto_install': False,
