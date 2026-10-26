@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'DG Erzberger Custom',
-    'version': '19.0.1.2.0',
+    'version': '19.0.1.3.0',
     'summary': 'Client-specific changes on top of the vendored Erzberger modules',
     'description': """
 Erzberger Verpackungssysteme / Erzberger Holzkunst - client changes
@@ -29,6 +29,8 @@ Content:
 * Purchase order report: "Payment Terms" label hidden when no term is set.
 * Purchase order report re-styled to the invoice format (same letterhead,
   same body layout) instead of the standard Odoo purchase layout.
+* Rechnung: the quotation text (Terms and conditions, also the text coming
+  from the quotation template) is no longer copied into the invoice.
 * Lieferschein: "Kundenreferenz" (customer's order number), taken from the
   sales order, shown on the picking and printed on the delivery note.
 * Shared letterhead footer: spaced slash ("Zwönitz / Erzgebirge") and the
