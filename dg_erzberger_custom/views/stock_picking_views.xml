@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_picking_form_customer_order_ref" model="ir.ui.view">
+        <field name="name">stock.picking.form.customer.order.ref</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="sale_stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <!-- next to "Verkaufsauftrag" in Additional Info -->
+            <xpath expr="//field[@name='sale_id']" position="after">
+                <field name="customer_order_ref" readonly="state in ['done', 'cancel']"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

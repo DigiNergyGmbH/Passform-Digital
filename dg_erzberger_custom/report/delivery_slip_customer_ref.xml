@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        Delivery note: the customer's own order number was missing. The slip
+        printed "Bestellnummer" (the picking origin, e.g. P00089) and "PO-Nr.",
+        but nothing that the customer can match against his own paperwork.
+        The line is printed right below the existing reference block, and only
+        when the field is filled.
+    -->
+
+    <record id="report_delivery_note_customer_order_ref" model="ir.ui.view">
+        <field name="name">report.delivery.note.customer.order.ref</field>
+        <field name="inherit_id" ref="erzberger_sale_report.report_delivery_note"/>
+        <field name="arch" type="xml">
+            <xpath expr="//t[@t-if='o.origin']" position="after">
+                <t t-if="o.customer_order_ref">
+                    <div style="font-weight:bold; font-size:10pt; margin-bottom:2mm;">
+                        Kundenreferenz: <span t-field="o.customer_order_ref"/>
+                    </div>
+                </t>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
