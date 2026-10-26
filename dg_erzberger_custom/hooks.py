@@ -13,6 +13,14 @@ a data file.
 
 
 def set_journal_invoice_templates(env):
+    # the parameter may already exist (it was often set by hand); set it
+    # instead of inserting a data record, which would collide on the key
+    env['ir.config_parameter'].sudo().set_param(
+        'account.custom_templates_facturx_list',
+        'erzberger_sale_report.report_invoice_document_custom,'
+        'erzberger_sale_report.report_invoice_document_custom_holzenberg',
+    )
+
     journals = env['account.journal'].search([('type', '=', 'sale')])
     for journal in journals:
         if journal.company_id.name and 'Holzkunst' in journal.company_id.name:

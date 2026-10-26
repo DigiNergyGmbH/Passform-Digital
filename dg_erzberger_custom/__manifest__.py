@@ -65,7 +65,6 @@ configuration work on the live instance.
         'report/layout_footer_patch.xml',
         'report/purchase_order_report.xml',
         'report/delivery_slip_customer_ref.xml',
-        'data/ir_config_parameter.xml',
     ],
     'post_init_hook': 'hooks.set_journal_invoice_templates',
     'installable': True,
